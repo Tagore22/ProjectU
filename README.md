@@ -103,7 +103,7 @@ void AEnemyBase::EnemyAttack()
 ![Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/15998a89-1e3e-4921-8038-7d885a931b77)
 ## PUPlayer
 * HPBarWidget, Inventory 관리
-* Attack, Run, Damaged, Die, Targeting, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
+* Attack, Run, Damaged, Die, Targeting, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail, LockOn 액션
 > LockOnTarget
 ```c++
 void APUPlayer::LockOnTarget()
