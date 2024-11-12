@@ -210,3 +210,97 @@ void APUPlayer::ToggleInventory()
 * Blend Space, Bone Layer Blend 활용
   
 ![플레이어 ABP](https://github.com/user-attachments/assets/272f5b3d-e893-4e1a-8f53-4d77846e183d)
+![플레이어 Animation](https://github.com/user-attachments/assets/183e1f59-7659-475f-adb8-2b87fc145d9f)
+## EnemyBaseAIController
+* Enemy가 감지하는 시야 및 청각 관리
+* 비헤이비어 트리에서 사용되는 UFUNCTION(BlueprintCallable)계열 함수들 관리
+> AEnemyBaseAIController
+```c++
+AEnemyBaseAIController::AEnemyBaseAIController()
+{
+	PrimaryActorTick.bCanEverTick = true;
+
+	SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AI Perception")));
+	sightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config")); // 시야 관리.
+	sightConfig->SightRadius = AI_SIGHT_RADIUS; 
+	sightConfig->LoseSightRadius = AI_LOSE_SIGHT_RADIUS;
+	sightConfig->PeripheralVisionAngleDegrees = AI_FIELD_OF_VIEW;
+	sightConfig->DetectionByAffiliation.bDetectEnemies = true;
+	sightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+	sightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	sightConfig->SetMaxAge(AI_MAXAGE);
+
+	hearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config")); // 청각 관리.
+	hearingConfig->HearingRange = AI_HEARING_RANGE;
+	hearingConfig->DetectionByAffiliation.bDetectEnemies = true;
+	hearingConfig->DetectionByAffiliation.bDetectNeutrals = true;
+	hearingConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	hearingConfig->SetMaxAge(AI_MAXAGE);
+
+	GetPerceptionComponent()->ConfigureSense(*hearingConfig);
+	GetPerceptionComponent()->ConfigureSense(*sightConfig);
+	GetPerceptionComponent()->SetDominantSense(sightConfig->GetSenseImplementation());
+	GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AEnemyBaseAIController::OnTargetDetected);
+}
+```
+> CalAttackDelay
+```c++
+void AEnemyBaseAIController::CalAttackDelay(float deltaTime)
+{
+	curTime += deltaTime;
+	if (curTime >= attackDelayTime)
+	{
+		isAttackDelay = false;
+		GetBlackboardComponent()->SetValueAsBool("IsAttackDelay", false);
+		attackDelayTime = FMath::RandRange(MINATTACKDELAY, MAXATTACKDELAY);
+		curTime = 0.0f;
+	}
+}
+```
+> OnTargetDetected
+```c++
+void AEnemyBaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
+{
+	if (!isReady)
+		return;
+	auto player = Cast<APUPlayer>(Actor);
+	if (player)
+	{
+		auto me = Cast<AEnemyBase>(GetPawn());
+		me->target = player;
+		GetBlackboardComponent()->SetValueAsObject(TEXT("TargetPawn"), Actor);
+	}
+}
+```
+## TemplateItem
+* 장비의 습득, 사용, 버릴때의 관리
+* 인터페이스 클래스 사용
+> PickupEvent
+```c++
+void ATemplateItem::PickupEvent()
+{
+	if (GetActorEnableCollision() && Isinrange)
+	{
+		PlayerRef->HUDRef->Inventory.Add(Iteminfo);
+		SetActorHiddenInGame(true);
+		SetActorEnableCollision(false);
+	}
+}
+```
+> OnEndOverlap
+```c++
+void ATemplateItem::OnEndOverlap(class UPrimitiveComponent* OverlappedComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	auto player = Cast<APUPlayer>(OtherActor);
+	if (player != nullptr)
+	{
+		Widget->SetVisibility(false);
+		Isinrange = false;
+		Mesh->SetRenderCustomDepth(false);
+	}
+}
+```
+> Blueprint
+
+![ReadMe 이미지(TemplateItem_1)](https://github.com/user-attachments/assets/c058e26d-5cb4-48f7-a849-b758b761e832)
+![ReadMe 이미지(TemplateItem_2)](https://github.com/user-attachments/assets/e9a6ddf3-7c62-455d-84ef-4aede15deb30)
