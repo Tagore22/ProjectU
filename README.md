@@ -6,5 +6,7 @@
 * 1인 자체개발
 
 # 데모 영상
-
+> Youtube
 # 기술설명서
+## Controller - Animation - Character 구조
+![구조 관계도](https://github.com/user-attachments/assets/a6e1e95c-812f-42a7-b25d-8e4db5d3a6b0)
