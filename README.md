@@ -304,3 +304,30 @@ void ATemplateItem::OnEndOverlap(class UPrimitiveComponent* OverlappedComponent,
 
 ![ReadMe 이미지(TemplateItem_1)](https://github.com/user-attachments/assets/c058e26d-5cb4-48f7-a849-b758b761e832)
 ![ReadMe 이미지(TemplateItem_2)](https://github.com/user-attachments/assets/e9a6ddf3-7c62-455d-84ef-4aede15deb30)
+## DestructibleProp
+* Overlap시 부서지는 아이템들의 관리
+* UDestructibleComponent 사용
+* OnOverlapBegin의 오버라이드 사용
+> ADestructibleProp
+```c++
+ADestructibleProp::ADestructibleProp()
+{
+	Coll = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	Coll->SetCollisionProfileName("Barrier");
+	RootComponent = Coll;
+
+	DM = CreateDefaultSubobject<UDestructibleComponent>(TEXT("Destructible Mesh"));
+	DM->SetupAttachment(RootComponent);
+	DM->SetNotifyRigidBodyCollision(true);
+}
+```
+> OnOverlapBegin
+```c++
+void ADestructibleProp::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	FTimerHandle DMTimer;
+	GetWorld()->GetTimerManager().SetTimer(DMTimer, FTimerDelegate::CreateLambda([&]()->void {
+		Destroy();
+		}), 2.5f, false);
+}
+```
