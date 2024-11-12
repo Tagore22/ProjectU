@@ -214,6 +214,7 @@ void APUPlayer::ToggleInventory()
 ![플레이어 Animation](https://github.com/user-attachments/assets/183e1f59-7659-475f-adb8-2b87fc145d9f)
 ## EnemyBaseAIController
 * Enemy가 감지하는 시야 및 청각 관리
+* 비헤이비어 트리 및 블랙보드 관리
 * 비헤이비어 트리에서 사용되는 UFUNCTION(BlueprintCallable)계열 함수들 관리
 > AEnemyBaseAIController
 ```c++
