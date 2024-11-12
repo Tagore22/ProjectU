@@ -95,6 +95,7 @@ void AEnemyBase::EnemyAttack()
 }
 ```
 > Animation BP
+* Blend Space 활용
 
 ![Enemy ABP](https://github.com/user-attachments/assets/34543596-bf8e-4008-9d44-05c362318c0d)
 > Enemy AI Behavior Tree
