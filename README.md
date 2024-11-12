@@ -206,3 +206,7 @@ void APUPlayer::ToggleInventory()
 	}
 }
 ```
+> Animation BP
+* Blend Space, Bone Layer Blend 활용
+  
+![플레이어 ABP](https://github.com/user-attachments/assets/272f5b3d-e893-4e1a-8f53-4d77846e183d)
