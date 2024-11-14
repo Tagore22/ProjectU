@@ -104,6 +104,10 @@ void AEnemyBase::EnemyAttack()
 > Enemy AI Behavior Tree
 
 ![Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/15998a89-1e3e-4921-8038-7d885a931b77)
+> EnemyMontage
+* Animation Notify 사용
+  
+![EnemyMontage](https://github.com/user-attachments/assets/28a56b5f-9c67-40b1-8de2-c6d64576235c)
 ## PUPlayer
 * HPBarWidget, Inventory 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
@@ -215,6 +219,11 @@ void APUPlayer::ToggleInventory()
   
 ![플레이어 ABP](https://github.com/user-attachments/assets/272f5b3d-e893-4e1a-8f53-4d77846e183d)
 ![플레이어 Animation](https://github.com/user-attachments/assets/183e1f59-7659-475f-adb8-2b87fc145d9f)
+> PlayerMontage
+
+* Animation Notify 사용
+
+![PlayerMontage](https://github.com/user-attachments/assets/72466d89-d27a-4959-8112-3d7ad0254973)
 ## EnemyBaseAIController
 * Enemy가 감지하는 시야 및 청각 관리
 * 비헤이비어 트리 및 블랙보드 관리
