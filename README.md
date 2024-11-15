@@ -18,6 +18,7 @@
 * Enemy의 FSM들을 설정
 * Attack, Run, Damaged, Die, Targeting등의 액션이 구현되어 있으며 상속된 자식클래스에서 활용함
 * UEnemyBaseAnim을 사용하여 파생클래스들의 Notify Delegate Broadcast
+* AIPerception과 Behavior tree를 이용하여 Player를 감지 및 공격하거나 일정 위치를 순찰함
 > OnDamageProcess
 ```c++
 void AEnemyBase::OnDamageProcess(int32 Damage, bool IsKnockBack)
@@ -109,8 +110,9 @@ void AEnemyBase::EnemyAttack()
   
 ![EnemyMontage](https://github.com/user-attachments/assets/28a56b5f-9c67-40b1-8de2-c6d64576235c)
 ## PUPlayer
-* HPBarWidget, Inventory 관리
+* HPBarWidget 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
+* Inventory를 이용하여 무기를 습득 및 교체
 > LockOnTarget
 ```c++
 void APUPlayer::LockOnTarget()
@@ -226,8 +228,8 @@ void APUPlayer::ToggleInventory()
 ![PlayerMontage](https://github.com/user-attachments/assets/72466d89-d27a-4959-8112-3d7ad0254973)
 ## EnemyBaseAIController
 * Enemy가 감지하는 시야 및 청각 관리
-* 비헤이비어 트리 및 블랙보드 관리
-* 비헤이비어 트리에서 사용되는 UFUNCTION(BlueprintCallable)계열 함수들 관리
+* Behavior tree 및 블랙보드 관리
+* Behavior tree에서 사용되는 UFUNCTION(BlueprintCallable)계열 함수들 관리
 > AEnemyBaseAIController
 ```c++
 AEnemyBaseAIController::AEnemyBaseAIController()
@@ -318,6 +320,12 @@ void ATemplateItem::OnEndOverlap(class UPrimitiveComponent* OverlappedComponent,
 
 ![ReadMe 이미지(TemplateItem_1)](https://github.com/user-attachments/assets/c058e26d-5cb4-48f7-a849-b758b761e832)
 ![ReadMe 이미지(TemplateItem_2)](https://github.com/user-attachments/assets/e9a6ddf3-7c62-455d-84ef-4aede15deb30)
+## MainWidget
+* Player의 HP, MP, Stamina와 남은 포션의 개수 및 인벤토리를 관리
+* Player의 정보를 연동하여 실시간으로 반영
+> Blueprint
+
+![MainWidget BP](https://github.com/user-attachments/assets/6cae93a1-79db-4bc9-9c33-3c0d601c19cc)
 ## DestructibleProp
 * Overlap시 부서지는 아이템들의 관리
 * UDestructibleComponent 사용
