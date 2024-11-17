@@ -119,10 +119,11 @@ void AEnemyBase::EnemyAttack()
 
 > AI Blueprint
 
-![근접Enemy BP](https://github.com/user-attachments/assets/ba138bee-6b13-4e5a-99e0-c0004327770d)
+![EnemySword BP](https://github.com/user-attachments/assets/2ca67103-6d49-4c5c-9bf9-4e255529a93f)
 ## EnemyBow
 * 시각 혹은 청각으로 Player를 감지할시 화살을 날려 공격함
 * Player를 시야에서 놓친다면 Player에게 천천히 접근하며 발견시 다시 공격을, 10초가량 찾지 못한다면 패트롤로 되돌아옴
+* Player를 처음 발견시 위치 HomeLocation을 저장한후 그로부터 일정거리 이상을 벗어난다면 패트롤로 되돌아옴
 > ShootTrace
 ```c++
 void AEnemyBow::ShootTrace() 
@@ -160,7 +161,8 @@ void AEnemyBow::ShootTrace()
 ![EnemyBow Montage](https://github.com/user-attachments/assets/80bbb7a6-c435-4e76-860e-a2c9c7203fb6)
 > AI Blueprint
 
-![EnemyBow BP](https://github.com/user-attachments/assets/ea842302-71dc-4e7e-a290-817863ec6c0d)
+![EnemyBow BP](https://github.com/user-attachments/assets/6bab5d4c-a71e-43f1-a43e-e27b4d055098)
+
 ## EnemyBoss
 * Bolt, Meteor, Summon 3가지 스킬을 소지
 * 체력을 기준으로 1, 2페이즈가 존재하며 50%이하가 되면 2페이즈로 돌입
