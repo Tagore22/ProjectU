@@ -98,17 +98,69 @@ void AEnemyBase::EnemyAttack()
 	}
 }
 ```
+## EnemyAx, EnemySword
+* 시각 혹은 청각으로 Player를 감지할시 뛰어서 빠르게 접근후 타겟팅거리 내에 도달하면 걸어서 천천히 주위를 서성이며 자신의 공격범위까지 접근함
+* 복수의 공격중 랜덤하게 하나를 골라 콤보 공격을 가함
+* Player를 처음 발견시 위치 HomeLocation을 저장한후 그로부터 일정거리 이상을 벗어난다면 패트롤로 되돌아옴
+* 코드는 생성자를 제외하고 전부 부모클래스인 EnemyBase의 것을 활용함
+
 > Animation BP
 * Blend Space 활용
 
 ![Enemy ABP](https://github.com/user-attachments/assets/34543596-bf8e-4008-9d44-05c362318c0d)
 > Enemy AI Behavior Tree
 
-![Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/15998a89-1e3e-4921-8038-7d885a931b77)
-> EnemyMontage
+![근접Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/d559d15b-b6c0-4489-8246-49bb86957d25)
+> EnemyAX Montage, EnemySword Montage
 * Animation Notify 사용
-  
+
+![EnemyAX Montage](https://github.com/user-attachments/assets/62111357-ea7e-43d8-9a58-0a862bcb9349)
 ![EnemyMontage](https://github.com/user-attachments/assets/28a56b5f-9c67-40b1-8de2-c6d64576235c)
+
+> AI Blueprint
+
+![근접Enemy BP](https://github.com/user-attachments/assets/ba138bee-6b13-4e5a-99e0-c0004327770d)
+## EnemyBow
+* 시각 혹은 청각으로 Player를 감지할시 화살을 날려 공격함
+* Player를 시야에서 놓친다면 Player에게 천천히 접근하며 발견시 다시 공격을, 10초가량 찾지 못한다면 패트롤로 되돌아옴
+> ShootTrace
+```c++
+void AEnemyBow::ShootTrace() 
+{
+	FVector startPos = GetActorLocation();
+	FVector endPos = startPos + GetActorForwardVector() * BOW_SIGHTDISTANCE;
+	FHitResult hitInfo;
+
+	TArray<AActor*> actorsToIgnore;
+	actorsToIgnore.Add(this);
+
+	bool bHit = UKismetSystemLibrary::BoxTraceSingle(GetWorld(), startPos, endPos, FVector(70.0f, 70.0f, 70.0f), GetActorRotation(),
+		ETraceTypeQuery::TraceTypeQuery1, false, actorsToIgnore, EDrawDebugTrace::None, hitInfo, true, FLinearColor::Red, FLinearColor::Green);
+	if (bHit)
+	{
+		auto player = hitInfo.GetActor()->GetDefaultSubobjectByName(TEXT("SpringArm"));
+		canSee = player != nullptr ? true : false;
+	}
+	else
+	{
+		canSee = false;
+	}
+}
+```
+> Animation BP
+* Blend Space 활용
+
+![EnemyBow ABP](https://github.com/user-attachments/assets/e84bd365-9505-4f92-a613-27b730abdeec)
+> Enemy AI Behavior Tree
+
+![Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/15998a89-1e3e-4921-8038-7d885a931b77)
+> EnemyBow Montage
+* Animation Notify 사용
+
+![EnemyBow Montage](https://github.com/user-attachments/assets/80bbb7a6-c435-4e76-860e-a2c9c7203fb6)
+> AI Blueprint
+
+![EnemyBow BP](https://github.com/user-attachments/assets/ea842302-71dc-4e7e-a290-817863ec6c0d)
 ## PUPlayer
 * HPBarWidget 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
