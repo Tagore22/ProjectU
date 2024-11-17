@@ -108,7 +108,7 @@ void AEnemyBase::EnemyAttack()
 * Blend Space 활용
 
 ![Enemy ABP](https://github.com/user-attachments/assets/34543596-bf8e-4008-9d44-05c362318c0d)
-> Enemy AI Behavior Tree
+> EnemyAX AI Behavior Tree
 
 ![근접Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/d559d15b-b6c0-4489-8246-49bb86957d25)
 > EnemyAX Montage, EnemySword Montage
@@ -151,7 +151,7 @@ void AEnemyBow::ShootTrace()
 * Blend Space 활용
 
 ![EnemyBow ABP](https://github.com/user-attachments/assets/e84bd365-9505-4f92-a613-27b730abdeec)
-> Enemy AI Behavior Tree
+> EnemyBow AI Behavior Tree
 
 ![Enemy 비헤이비어 트리](https://github.com/user-attachments/assets/15998a89-1e3e-4921-8038-7d885a931b77)
 > EnemyBow Montage
@@ -161,6 +161,78 @@ void AEnemyBow::ShootTrace()
 > AI Blueprint
 
 ![EnemyBow BP](https://github.com/user-attachments/assets/ea842302-71dc-4e7e-a290-817863ec6c0d)
+## EnemyBoss
+* Bolt, Meteor, Summon 3가지 스킬을 소지
+* 체력을 기준으로 1, 2페이즈가 존재하며 50%이하가 되면 2페이즈로 돌입
+* 1페이즌에는 Bolt만을 사용하며 2페이즈에는 3가지를 모두 사용함
+* 피격후 3초 이후 텔레포트를 사용하여 랜덤한 위치로 도주함
+> OnDamageProcess
+```c++
+void AEnemyBoss::OnDamageProcess(int32 Damage, bool IsKnockBack)
+{
+	FTimerHandle TelpoTimer;
+	// 타이머를 넣는다. 다만 이전 타이머를 지우지 않고 단 한번만 사용되어야 한다.
+	if (!IsTimerON)
+	{
+		IsTimerON = true;
+		GetWorld()->GetTimerManager().SetTimer(TelpoTimer, FTimerDelegate::CreateLambda([&]()->void {
+			CastTelPo();
+			}), 3.0f, false);
+	}
+	isBoss = hp - Damage > 0 ? true : false;
+	Super::OnDamageProcess(Damage, false);
+}
+```
+> CastTelPo
+```c++
+void AEnemyBoss::CastTelPo()
+{
+	if (hp <= 0)
+		return;
+	mState = EEnemyState::SuperArmor;
+	// 여기서 텔포 이펙트(파티클)을 띄운다.
+	TelpoComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TelpoSystem, GetActorLocation());
+	PlayMontage(TEXT("Telpo"));
+	FTimerHandle TelpoEndTimer;
+	GetWorld()->GetTimerManager().SetTimer(TelpoEndTimer, FTimerDelegate::CreateLambda([&]()->void {
+		TelpoComponent->Deactivate();
+		}), 2.2f, false);
+	// 그 후 텔포 애니메이션을 실행한다. 애니메이션이 끝나면 텔포 파티클을 끈다.
+}
+```
+> SpawnSummon
+```c++
+void AEnemyBoss::SpawnSummon()
+{
+	float cur = SPAWN_LOC;
+	for (int i = 0; i < 4; ++i)
+	{
+		FVector loc = GetActorLocation() + GetActorRightVector() * cur + GetActorForwardVector() * SPAWN_LOC;
+		SummonComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), SummonSystem, FVector(loc.X, loc.Y, loc.Z + 30), FRotator::ZeroRotator, FVector(3.5, 3.5, 3.5));
+		FActorSpawnParameters ActorSpawnParams;
+		ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+		auto spawned = GetWorld()->SpawnActor<AEnemySword>(AEnemySword::StaticClass(), loc, GetActorRotation(), ActorSpawnParams);
+		if (spawned != nullptr)
+		{
+			spawned->Spawned();
+		}
+		cur -= SPAWN_BETWEEN;
+	}
+}
+```
+> Animation BP
+
+![EnemyBoss ABP](https://github.com/user-attachments/assets/58462670-b982-42bc-b99b-cce1009c8372)
+> EnemyBoss AI Behavior Tree
+
+![EnemyBoss 비헤이비어 트리](https://github.com/user-attachments/assets/e15dc815-9b0a-4719-bae0-3be3a713fa1f)
+> EnemyBoss Montage
+* Animation Notify 사용
+
+![EnemyBoss Montage](https://github.com/user-attachments/assets/19295926-1602-496d-854a-87061d1d69d9)
+> AI Blueprint
+
+![EnemyBoss BP](https://github.com/user-attachments/assets/0eeac865-3347-4bf2-8b59-086e0d95a331)
 ## PUPlayer
 * HPBarWidget 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
