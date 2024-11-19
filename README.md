@@ -239,7 +239,7 @@ void AEnemyBoss::SpawnSummon()
 * HPBarWidget 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
 * Run, BackStab, Dodge는 모두 하나의 키로 조작이 가능하며, 이동키와 함께 눌렀는가, 짧게 혹은 길게 눌렀는가에 따라 Dodge, Run, BackStab 액션으로 나누어짐
-* Bone Layer Blend를 활용하여 Potion을 마시면서 이동이 가능함
+* Layered Blend Per Bone을 활용하여 Potion을 마시면서 이동이 가능함
 * Inventory를 이용하여 무기를 습득 및 교체
 > LockOnTarget
 ```c++
@@ -345,7 +345,7 @@ void APUPlayer::ToggleInventory()
 }
 ```
 > Animation BP
-* Blend Space, Bone Layer Blend 활용
+* Blend Space, Layered Blend Per Bone 활용
   
 ![플레이어 ABP](https://github.com/user-attachments/assets/272f5b3d-e893-4e1a-8f53-4d77846e183d)
 ![플레이어 Animation](https://github.com/user-attachments/assets/183e1f59-7659-475f-adb8-2b87fc145d9f)
