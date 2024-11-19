@@ -239,6 +239,7 @@ void AEnemyBoss::SpawnSummon()
 * HPBarWidget 관리
 * Attack, Run, Damaged, Die, LockOn, Potion, Assert, Dodge, BackStab, KnockBack, GhostTail 액션
 * Run, BackStab, Dodge는 모두 하나의 키로 조작이 가능하며, 이동키와 함께 눌렀는가, 짧게 혹은 길게 눌렀는가에 따라 Dodge, Run, BackStab 액션으로 나누어짐
+* SetTimer 함수와 적과 플레이어의 CustomTimeDilation 변수값을 사용하여 타임스톱을 구현함으로써 타격감을 추가함
 * Layered Blend Per Bone을 활용하여 Potion을 마시면서 이동이 가능함
 * Inventory를 이용하여 무기를 습득 및 교체
 > LockOnTarget
