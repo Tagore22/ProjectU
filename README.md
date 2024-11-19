@@ -14,7 +14,7 @@
 ## Controller - Animation - Character 구조
 ![구조 관계도](https://github.com/user-attachments/assets/a6e1e95c-812f-42a7-b25d-8e4db5d3a6b0)
 ## EnemyBase
-* HPBarWidget 관리
+* 다크소울3의 시스템을 차용하여 Player의 LockOn 대상이 되면 체력바가 계속 보여지고, LockOn없이 피격될때에는 3초 이후 체력바가 사라지는 식의 HPBarWidget 관리
 * Enemy의 FSM들을 설정
 * Attack, Run, Damaged, Die, Targeting등의 액션이 구현되어 있으며 상속된 자식클래스에서 활용함
 * UEnemyBaseAnim을 사용하여 파생클래스들의 Notify Delegate Broadcast
