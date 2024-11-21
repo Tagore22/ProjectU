@@ -107,6 +107,7 @@ void AEnemyBase::EnemyAttack()
 > Animation BP
 * Blend Space 활용
 
+![EnemyAX Blend Space](https://github.com/user-attachments/assets/e2233c55-0480-478b-a997-2ee53903c536)
 ![Enemy ABP](https://github.com/user-attachments/assets/34543596-bf8e-4008-9d44-05c362318c0d)
 > EnemyAX AI Behavior Tree
 
@@ -151,6 +152,7 @@ void AEnemyBow::ShootTrace()
 > Animation BP
 * Blend Space 활용
 
+![EnemyBow Blend Space](https://github.com/user-attachments/assets/da257a5b-22a0-4f41-a550-8997857d975c)
 ![EnemyBow ABP](https://github.com/user-attachments/assets/e84bd365-9505-4f92-a613-27b730abdeec)
 > EnemyBow AI Behavior Tree
 
@@ -347,7 +349,8 @@ void APUPlayer::ToggleInventory()
 ```
 > Animation BP
 * Blend Space, Layered Blend Per Bone 활용
-  
+
+![Player Blend Space](https://github.com/user-attachments/assets/555ee35e-07b3-496e-83ed-4a1e9ed70652)
 ![플레이어 ABP](https://github.com/user-attachments/assets/272f5b3d-e893-4e1a-8f53-4d77846e183d)
 ![플레이어 Animation](https://github.com/user-attachments/assets/183e1f59-7659-475f-adb8-2b87fc145d9f)
 > PlayerMontage
