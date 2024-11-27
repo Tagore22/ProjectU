@@ -340,7 +340,7 @@ void APUPlayer::AttackCheck()
 		FCollisionShape::MakeSphere(WEAPONRADIUS[WeaponNum]),
 		params);
 
-	// °ø°Ý ¹üÀ§¿ë Æ®·¹ÀÌ½º.
+	// ê³µê²© ë²”ìœ„ìš© íŠ¸ë ˆì´ìŠ¤.
 	/*FVector traceVec = GetActorForwardVector() * WEAPONRANGE[WeaponNum];
 	FVector center = GetActorLocation() + traceVec * 0.5;
 	float halfHeight = WEAPONRANGE[WeaponNum] * 0.5 + WEAPONRADIUS[WeaponNum];
@@ -371,7 +371,7 @@ void APUPlayer::AttackCheck()
 				int32 Damage = FMath::RandRange(WEAPONDAMAGE[WeaponNum], WEAPONDAMAGE[WeaponNum] + 50);
 				enemy->OnDamageProcess(Damage, false);
 				UGameplayStatics::PlaySound2D(GetWorld(), hitSound);
-				// ¿©±â¼­ Å¸ÀÓ½ºÅ¾.
+				// ì—¬ê¸°ì„œ íƒ€ìž„ìŠ¤íƒ‘.
 				TimeStopEnemy = enemy;
 				TimeStop();
 			}
@@ -521,6 +521,8 @@ void APUPlayer::LookTarget(float deltaSeconds) const
 
 void APUPlayer::SpaceAction()
 {
+	if (mState == EPlayerState::Dodge)
+		return;
 	if (curDir == FVector::ZeroVector)
 	{
 		BackStab();
