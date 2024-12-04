@@ -8,8 +8,7 @@
 # 데모 영상
 > Youtube
 
-
-[![ReadMe 이미지(TemplateItem_2)](https://github.com/user-attachments/assets/e9a6ddf3-7c62-455d-84ef-4aede15deb30)](https://youtu.be/nA8NWgIG8-M?si=JKk9unIKDunud6aS)
+[![포폴 영상 썸네일](https://github.com/user-attachments/assets/9749ce60-4c66-4740-a5d4-3fd8695c4184)](https://youtu.be/nA8NWgIG8-M?si=JKk9unIKDunud6aS)
 # 기술설명서
 ## Controller - Animation - Character 구조
 ![구조 관계도](https://github.com/user-attachments/assets/a6e1e95c-812f-42a7-b25d-8e4db5d3a6b0)
