@@ -5,6 +5,8 @@
 * 제작기간 : 2024. 6. 27 ~ 2024. 11. 3
 * 1인 자체개발
 
+[![Solved.ac Profile](http://mazassumnida.wtf/api/v2/generate_badge?boj=tagore22)](https://solved.ac/tagore22/)
+
 # 데모 영상
 > Youtube
 
